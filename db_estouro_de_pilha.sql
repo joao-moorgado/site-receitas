@@ -9,7 +9,7 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS db_usr (
   usr_id INT NOT NULL AUTO_INCREMENT,
   usr_name VARCHAR(20) NOT NULL,
-  usr_password VARCHAR(20) NOT NULL,
+  usr_password VARCHAR(255) NOT NULL,
   PRIMARY KEY (usr_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
