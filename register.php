@@ -3,18 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Usuário</title>
+    <title>Registro</title>
+    <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
-    <h2>Registro de Usuário</h2>
-    <form action="register_processa.php" method="post">
-        <label for="username">Usuário:</label><br>
-        <input type="text" id="username" name="username" required><br><br>
-        
-        <label for="password">Senha:</label><br>
-        <input type="password" id="password" name="password" required><br><br>
-        
-        <button type="submit">Registrar</button>
-    </form>
+    
+    <h1>ESTOURO<BR>DE PILHA</h1>
+    <?php
+
+    require_once "form_register.php";
+    require_once "banco.php";
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+        // Obtém os dados do formulário
+        $usr = $_POST['usr'];
+        $pwd = $_POST['psw'];
+        $cnfpwd = $_POST['cnfpwd'];
+
+        if ($pwd !== $cnfpwd) {
+            echo 'As senhas não coincidem.';
+        } else {
+            registerUser($usr, $pwd);
+        }
+    
+    }
+
+    ?>
+
 </body>
 </html>

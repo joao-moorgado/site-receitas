@@ -19,5 +19,21 @@
     return $busca;
   }
 
+  function registerUser(string $username, string $password) {
+    global $banco;
+  
+      // Criptografa a senha (recomendado usar password_hash() para segurança)
+      $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+  
+      // Insere os dados na tabela db_usr
+      $sql = "INSERT INTO db_usr (usr_name, usr_password) VALUES ('$username', '$hashed_password')";
+  
+      if ($banco->query($sql)) {
+          echo "Usuário registrado com sucesso.";
+      } else {
+          echo "Erro ao registrar o usuário: " . mysqli_error($banco);
+      }
+    }
+
   ?>
 </pre>
