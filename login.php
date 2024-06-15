@@ -17,64 +17,34 @@
         require_once 'form-login.php';
 
         // Input do usuário e senha
-        $usr = $_POST['user'];
-        $pwd = $_POST['password'];
+        $usr = $_POST['usr'];
+        $pwd = $_POST['pwd'];
 
         // Teste para ver se o input funcionou
         echo $usr . ' - ' . $pwd;
 
-        // Buscar usuário - ainda em desenvolvimento
+        echo '<br>';
+
+        // Buscar usuário
         $busca = buscarUsuario($usr);
-        
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // Código que estou usando de base para fazer a página de login
 
-        session_start();
-        
-        $usu = $_SESSION["usuario"] ?? null;
-
-        if(!is_null($usu)){
-            // estou logado
-            header("Location: Aula14.php");
+        // Login - em desenvolvimento
+        if($busca->num_rows == 0){
+            echo "<br> Usuário não existe";
         }else{
+            echo "<br> Usuário existe";
+        
+            $obj = $busca->fetch_object();
+                    echo "<br>" . $obj->usr_name;
+                    echo "<br>" . $obj->usr_password;
+                    echo "<br>" . $pwd;
 
-            require_once "banco.php";
-
-            $usu = $_POST['usuario'] ?? null;
-            $sen = $_POST['senha'] ?? null;
-
-            if(is_null($usu) || is_null($sen)){
-                require_once "form-login.php";
-            }else{
-                require_once "form-login.php"; // para testes
-
-                echo "~ [Usuario: $usu - Senha: $sen] ~ <br>";
-
-                $busca = buscarUsuario($usu);
-
-                if($busca->num_rows == 0){
-                    echo "<br> Usuário não existe";
-                }else{
-                    echo "<br> boa";
-                    
-                    $obj = $busca->fetch_object();
-                    echo "<br>" . $obj->usuario;
-                    echo "<br>" . $obj->nome;
-                    echo "<br>" . $obj->senha;
-
-                    // if($sen === $obj->senha){
-                    if(password_verify($sen, $obj->senha)){
-                        echo "<br> sucesso!";
+                    if(password_verify($pwd, $obj->usr_password)){
+                        echo "<br> Sucesso";
                     }else{
-                        echo "<br> sem sucesso :/";
+                        echo "<br> Sem sucesso";
                     }
-
                 }
-
-                
-            }
-            
-      }
     ?>
 
 </body>
