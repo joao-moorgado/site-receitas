@@ -8,10 +8,10 @@
 
   $banco = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
 
-  function buscarUsuario(string $usuario, bool $debug=false) {
+  function buscarUsuario(string $usr) {
     global $banco;
 
-    $q = "SELECT usuario, nome, senha FROM usuarios WHERE usuario='$usuario'";
+    $q = "SELECT usr_id, usr_name, usr_password FROM db_usr WHERE usr_name ='$usr'";
 
     $busca = $banco->query($q);
 
