@@ -11,40 +11,39 @@
     <h1>ESTOURO<BR>DE PILHA</h1>
     <?php
 
-        // Conexão com o banco de dados
-        require_once 'banco.php';
-        // Import do formulário
-        require_once 'form-login.php';
+        session_start();
 
-        // Input do usuário e senha
-        $usr = $_POST['usr'];
-        $pwd = $_POST['pwd'];
+        $usr = $_SESSION["usr"] ?? null;
 
-        // Teste para ver se o input funcionou
-        echo $usr . ' - ' . $pwd;
+        if(!is_null($usr)) {
+            header("Location: feed.php");
+        } else {
+            // Conexão com o banco de dados
+            require_once 'banco.php';
+            // Import do formulário
+            require_once 'form-login.php';
 
-        echo '<br>';
+            // Input do usuário e senha
+            $usr = $_POST['usr'];
+            $pwd = $_POST['pwd'];
 
-        // Buscar usuário
-        $busca = buscarUsuario($usr);
+            echo '<br>';
 
-        // Login - em desenvolvimento
-        if($busca->num_rows == 0){
-            echo "<br> Usuário não existe";
-        }else{
-            echo "<br> Usuário existe";
-        
-            $obj = $busca->fetch_object();
-                    echo "<br>" . $obj->usr_name;
-                    echo "<br>" . $obj->usr_password;
-                    echo "<br>" . $pwd;
+            // Buscar usuário
+            $busca = buscarUsuario($usr);
 
-                    if(password_verify($pwd, $obj->usr_password)){
-                        echo "<br> Sucesso";
-                    }else{
-                        echo "<br> Sem sucesso";
+            // Login - em desenvolvimento
+            if($busca->num_rows == 0){
+                echo "<br> Usuário não existe";
+            }else{    
+                $obj = $busca->fetch_object();
+                        if(password_verify($pwd, $obj->usr_password)){
+                            header("Location: feed.php");
+                        }else{
+                            echo "<br> Falha de Login";
+                        }
                     }
-                }
+            }
     ?>
 
 </body>
