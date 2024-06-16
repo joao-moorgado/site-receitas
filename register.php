@@ -1,3 +1,7 @@
+<?php
+    session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -8,38 +12,53 @@
 </head>
 <body>
     
-    <h1>ESTOURO<BR>DE PILHA</h1>
-    <?php
+    <header>
+        <div class="container">
+            <h1>Estouro de Pilha</h1>
+            <nav>
+                <ul>
+                    <li>Bem-vindo!</li>
+                    <li><a href="feed.php">Inicio</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-session_start();
+    <main class="container">
+        <section class="form">
+            <?php 
+                require_once 'form_register.php'; 
 
-require_once "form_register.php";
-require_once "banco.php";
+                if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                    // Obtém os dados do formulário
+                    $usr = $_POST['usr'];
+                    $pwd = $_POST['psw'];
+                    $cnfpwd = $_POST['cnfpwd'];
+        
+                    if ($pwd !== $cnfpwd) {
+                        echo 'As senhas não coincidem.';
+                    } else {
+                        // Chama a função para registrar o usuário
+                        registerUser($usr, $pwd);
+        
+                        // Definir um sinalizador de cadastro bem-sucedido na sessão
+                        $_SESSION['cadastro_sucesso'] = true;
+        
+                        // Redirecionar para a página de sucesso
+                        header("Location: sucesso.php");
+                        exit();
+                    }
+                }
+            ?>
+        </section>
+    </main>
 
-    // Obtém os dados do formulário
-    $usr = $_POST['usr'];
-    $pwd = $_POST['psw'];
-    $cnfpwd = $_POST['cnfpwd'];
-
-    if ($pwd !== $cnfpwd) {
-        echo 'As senhas não coincidem.';
-    } else {
-        // Chama a função para registrar o usuário
-        registerUser($usr, $pwd);
-
-        // Definir um sinalizador de cadastro bem-sucedido na sessão
-        $_SESSION['cadastro_sucesso'] = true;
-
-        // Redirecionar para a página de sucesso
-        header("Location: sucesso.php");
-        exit();
-    }
-
-}
-
-    ?>
-
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Estouro de Pilha. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+    
 </body>
 </html>

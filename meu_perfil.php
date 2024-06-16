@@ -39,9 +39,8 @@ $result_posts = $stmt_posts->get_result();
 </header>
 
 <main class="container">
-    <h2>Minhas Postagens</h2>
-
     <section class="feed">
+        <h2>Minhas Postagens</h2>
         <?php while ($post = $result_posts->fetch_object()): ?>
             <div class="post">
                 <p><?php echo nl2br(htmlspecialchars($post->post_body)); ?></p>

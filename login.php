@@ -43,9 +43,29 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']) {
 </head>
 <body>
 
-<h1>ESTOURO<BR>DE PILHA</h1>
+    <header>
+        <div class="container">
+            <h1>Estouro de Pilha</h1>
+            <nav>
+                <ul>
+                    <li>Bem-vindo!</li>
+                    <li><a href="feed.php">Inicio</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-<?php require_once 'form-login.php'; ?>
+    <main class="container">
+        <section class="form">
+            <?php require_once 'form-login.php'; ?>
+        </section>
+    </main>
 
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Estouro de Pilha. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+    
 </body>
 </html>

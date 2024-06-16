@@ -6,6 +6,6 @@
     <title>Document</title>
 </head>
 <body>
-    <p>Deu certo agora é só clicar <a href="login.php">aqui</a> e aproveitar</p>
+    <p>Sucesso! Agora é só clicar <a href="login.php">aqui</a> e aproveitar ☺</p>
 </body>
 </html>
