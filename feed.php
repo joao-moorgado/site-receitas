@@ -5,30 +5,6 @@ $usr = $_SESSION['usr'] ?? '';
 
 require_once 'banco.php';
 
-// Inicializa a variável de resultado da pesquisa
-$usuarios_encontrados = [];
-
-// Verifica se foi submetido um formulário de pesquisa
-if (isset($_GET['pesquisa'])) {
-    $termo_pesquisa = $_GET['pesquisa'];
-
-    // Consulta para buscar usuários que correspondem ao termo de pesquisa
-    $stmt = $banco->prepare("SELECT usr_id, usr_name FROM db_usr WHERE usr_name LIKE ?");
-    $termo_pesquisa = '%' . $termo_pesquisa . '%'; // Adiciona % para pesquisa parcial
-    $stmt->bind_param("s", $termo_pesquisa);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    // Armazena os resultados da pesquisa em um array
-    while ($row = $result->fetch_object()) {
-        $usuarios_encontrados[] = $row;
-    }
-
-    // Verifica se algum usuário foi encontrado
-    if (empty($usuarios_encontrados)) {
-        $mensagem_pesquisa = "Nenhum usuário encontrado.";
-    }
-}
 
 // Busca todas as postagens
 $result_posts = $banco->query("SELECT db_post.post_id, db_post.post_body, db_post.usr_id, db_usr.usr_name FROM db_post JOIN db_usr ON db_post.usr_id = db_usr.usr_id ORDER BY db_post.post_id DESC");
@@ -66,7 +42,7 @@ $result_posts = $banco->query("SELECT db_post.post_id, db_post.post_body, db_pos
 <main class="container">
     <aside class="sidebar">
         <ul>
-            <li><a href="#">Últimas Perguntas</a></li>
+            <li><a href="pesquisa_usuario.php">Usuários</a></li>
             <li><a href="#">Mais Votadas</a></li>
             <li><a href="#">Sem Resposta</a></li>
             <li><a href="#">Categorias</a></li>
@@ -81,29 +57,6 @@ $result_posts = $banco->query("SELECT db_post.post_id, db_post.post_body, db_pos
                     <button type="submit">Postar</button>
                 </form>
             </div>
-        <?php endif; ?>
-
-        <!-- Formulário de pesquisa -->
-        <form action="" method="GET" class="search-form">
-            <input type="text" name="pesquisa" placeholder="Pesquisar usuários">
-            <button type="submit">Pesquisar</button>
-        </form>
-
-        <!-- Exibição dos resultados da pesquisa -->
-        <?php if (isset($termo_pesquisa)): ?>
-            <h2>Resultados da Pesquisa por "<?php echo htmlspecialchars($termo_pesquisa); ?>"</h2>
-            <?php if (!empty($usuarios_encontrados)): ?>
-                <ul class="search-results">
-                    <?php foreach ($usuarios_encontrados as $usuario): ?>
-                        <li>
-                            <h3><?php echo htmlspecialchars($usuario->usr_name); ?></h3>
-                            <p><a href="perfil_usuario.php?usr_id=<?php echo $usuario->usr_id; ?>">Ver perfil</a></p>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
-            <?php else: ?>
-                <p><?php echo htmlspecialchars($mensagem_pesquisa); ?></p>
-            <?php endif; ?>
         <?php endif; ?>
 
         <!-- Exibição das postagens -->

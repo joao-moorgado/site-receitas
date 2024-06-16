@@ -22,6 +22,9 @@ header {
     background: #333;
     color: #fff;
     padding: 1rem 0;
+    position: fixed; /* Set the navbar to fixed position */
+    top: 0; /* Position the navbar at the top of the page */
+    width: 100%; /* Full width */
 }
 
 header h1 {
@@ -51,7 +54,7 @@ header nav ul li a {
 /* Main */
 main {
     display: flex;
-    margin-top: 20px;
+    margin-top: 80px;
 }
 
 /* Sidebar */
@@ -62,6 +65,7 @@ main {
     margin-right: 20px;
     border: 1px solid #ddd;
     border-radius: 5px;
+    margin-top: 80px;
 }
 
 .sidebar ul {
@@ -85,6 +89,7 @@ main {
 /* Feed */
 .feed {
     width: 75%;
+    margin-top: 80px;
 }
 
 .post {
