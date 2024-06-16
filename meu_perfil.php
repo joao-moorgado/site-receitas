@@ -2,15 +2,18 @@
 session_start();
 $logged_in = $_SESSION['logged_in'] ?? false;
 $usr = $_SESSION['usr'] ?? '';
+$usr_id = $_SESSION['usr_id'] ?? '';
 
 require_once 'banco.php';
 
+
 // Consulta para obter todas as postagens do usuário logado
 $stmt_posts = $banco->prepare("SELECT post_id, post_body FROM db_post WHERE usr_id = ?");
-$stmt_posts->bind_param("s", $usr);
+$stmt_posts->bind_param("i", $usr_id);
 $stmt_posts->execute();
 $result_posts = $stmt_posts->get_result();
 ?>
+
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -27,15 +30,9 @@ $result_posts = $stmt_posts->get_result();
         <h1>Estouro de Pilha</h1>
         <nav>
             <ul>
-                <?php if ($logged_in): ?>
-                    <li>Olá, <?php echo htmlspecialchars($usr); ?>!</li>
-                    <li><a href="logout.php">Logout</a></li>
-                    <li><a href="perfil_usuario.php?usr_id=<?php echo urlencode($usr); ?>">Meu Perfil</a></li>
-                <?php else: ?>
-                    <li>Bem-vindo!</li>
-                    <li><a href="login.php">Login</a></li>
-                    <li><a href="register.php">Cadastro</a></li>
-                <?php endif; ?>
+                <li>Olá, <?php echo htmlspecialchars($usr); ?>!</li>
+                <li><a href="feed.php">Inicio</a></li>
+                <li><a href="logout.php">Logout</a></li>
             </ul>
         </nav>
     </div>

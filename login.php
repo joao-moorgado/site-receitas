@@ -17,6 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (password_verify($pwd, $obj->usr_password)) {
             $_SESSION['usr'] = $obj->usr_name; // Corrigido para usr_name
+            $_SESSION['usr_id'] = $obj->usr_id; //pegando id para mostrar postagens
             $_SESSION['logged_in'] = true;
             header("Location: feed.php");
             exit();
@@ -26,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-if ($_SESSION['logged_in']) {
+if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']) {
     header("Location: feed.php");
     exit();
 }

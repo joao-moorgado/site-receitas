@@ -10,14 +10,12 @@
 
   function buscarUsuario(string $usr) {
     global $banco;
-
-    $sql = "SELECT * FROM db_usr WHERE usr_name = '$usr'";
-
-    $busca = $banco->query($sql);
-    echo var_dump($busca);
-
-    return $busca;
-  }
+    $sql = "SELECT usr_id, usr_name, usr_password FROM db_usr WHERE usr_name = ?";
+    $stmt = $banco->prepare($sql);
+    $stmt->bind_param("s", $usr);
+    $stmt->execute();
+    return $stmt->get_result();
+}
 
   function registerUser(string $username, string $password) {
     global $banco;
