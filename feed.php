@@ -19,14 +19,14 @@ $usr = $_SESSION['usr'] ?? '';
         <h1>Estouro de Pilha</h1>
         <nav>
             <ul>
-                <li><a href="feed.php">Início</a></li>
                 <?php if ($logged_in): ?>
+                    <li>Olá!</li>
                     <li><a href="logout.php">Logout</a></li>
                 <?php else: ?>
+                    <li>Bem-vindo!</li>
                     <li><a href="login.php">Login</a></li>
+                    <li><a href="register.php">Cadastro</a></li>
                 <?php endif; ?>
-                <li><a href="#">Tags</a></li>
-                <li><a href="#">Usuários</a></li>
             </ul>
         </nav>
     </div>
