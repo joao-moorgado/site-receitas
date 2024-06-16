@@ -1,9 +1,3 @@
-<?php
-session_start();
-$usr = $_SESSION["usr"] ?? null;
-$logged_in = $_SESSION["logged_in"] ?? false;
-?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -16,6 +10,11 @@ $logged_in = $_SESSION["logged_in"] ?? false;
 
 <h1>ESTOURO<BR>DE PILHA</h1>
 <?php
+
+    session_start();
+    $usr = $_SESSION["usr"] ?? null;
+    $logged_in = $_SESSION["logged_in"] ?? false;
+
     if ($logged_in) {
         header("Location: feed.php");
         exit();

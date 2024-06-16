@@ -35,5 +35,18 @@
       }
     }
 
+    function registerPost(string $ttl, string $bdy, int $usr_id) {
+      global $banco;
+    
+        // Insere os dados na tabela db_usr
+        $sql = "INSERT INTO db_post (post_ttl, post_bdy, usr_id) VALUES ('$ttl', '$bdy', '$usr_id')";
+    
+        if ($banco->query($sql)) {
+            echo "Post registrado com sucesso.";
+        } else {
+            echo "Erro ao registrar o post: " . mysqli_error($banco);
+        }
+      }
+
   ?>
 </pre>
