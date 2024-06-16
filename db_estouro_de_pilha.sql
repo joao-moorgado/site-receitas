@@ -15,9 +15,21 @@ CREATE TABLE IF NOT EXISTS db_usr (
 
 CREATE TABLE IF NOT EXISTS db_post (
 	post_id INT NOT NULL AUTO_INCREMENT,
-    post_body TEXT NOT NULL,
-    -- post_tags,
-    usr_id INT,
-    PRIMARY KEY (post_id),
-    FOREIGN KEY (usr_id) REFERENCES db_usr(usr_id)
+  post_tittle VARCHAR(30) NOT NULL,
+  post_body TEXT NOT NULL,
+  -- post_tags,
+  post_note INT,
+  usr_id INT NOT NULL,
+  PRIMARY KEY (post_id),
+  FOREIGN KEY (usr_id) REFERENCES db_usr(usr_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE IF NOT EXISTS db_comm (
+  comm_id INT NOT NULL AUTO_INCREMENT,
+  comm_body TEXT NOT NULL,
+  comm_note INT,
+  usr_id INT NOT NULL,
+  post_id INT NOT NULL,
+  FOREIGN KEY (usr_id) REFERENCES db_usr(usr_id),
+  FOREIGN KEY (post_id) REFERENCES db_post(post_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
