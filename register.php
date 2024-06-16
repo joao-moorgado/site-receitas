@@ -11,23 +11,33 @@
     <h1>ESTOURO<BR>DE PILHA</h1>
     <?php
 
-    require_once "form_register.php";
-    require_once "banco.php";
+session_start();
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+require_once "form_register.php";
+require_once "banco.php";
 
-        // Obtém os dados do formulário
-        $usr = $_POST['usr'];
-        $pwd = $_POST['psw'];
-        $cnfpwd = $_POST['cnfpwd'];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-        if ($pwd !== $cnfpwd) {
-            echo 'As senhas não coincidem.';
-        } else {
-            registerUser($usr, $pwd);
-        }
-    
+    // Obtém os dados do formulário
+    $usr = $_POST['usr'];
+    $pwd = $_POST['psw'];
+    $cnfpwd = $_POST['cnfpwd'];
+
+    if ($pwd !== $cnfpwd) {
+        echo 'As senhas não coincidem.';
+    } else {
+        // Chama a função para registrar o usuário
+        registerUser($usr, $pwd);
+
+        // Definir um sinalizador de cadastro bem-sucedido na sessão
+        $_SESSION['cadastro_sucesso'] = true;
+
+        // Redirecionar para a página de sucesso
+        header("Location: sucesso.php");
+        exit();
     }
+
+}
 
     ?>
 
