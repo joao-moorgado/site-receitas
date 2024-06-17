@@ -67,15 +67,16 @@ function countLikes(int $post_id) {
 }
 
 // Função para registrar comentário
-function registerComment(string $comm_body, int $usr_id, int $post_id) {
+function registerComment(string $comm_body, int $usr_id, int $post_id): bool {
     global $banco;
     $sql = "INSERT INTO db_comm (comm_body, usr_id, post_id) VALUES (?, ?, ?)";
     $stmt = $banco->prepare($sql);
     $stmt->bind_param("sii", $comm_body, $usr_id, $post_id);
     if ($stmt->execute()) {
-        echo "Comentário registrado com sucesso.";
+        return true;
     } else {
-        echo "Erro ao registrar o comentário: " . $stmt->error;
+        error_log("Erro ao registrar o comentário: " . $stmt->error);
+        return false;
     }
 }
 
