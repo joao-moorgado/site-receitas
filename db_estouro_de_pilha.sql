@@ -11,10 +11,10 @@ CREATE TABLE IF NOT EXISTS db_usr (
   usr_name VARCHAR(20) NOT NULL,
   usr_password VARCHAR(255) NOT NULL,
   PRIMARY KEY (usr_id)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE IF NOT EXISTS db_post (
-	post_id INT NOT NULL AUTO_INCREMENT,
+  post_id INT NOT NULL AUTO_INCREMENT,
   post_tittle VARCHAR(30) NOT NULL,
   post_body TEXT NOT NULL,
   -- post_tags,
@@ -30,8 +30,9 @@ CREATE TABLE IF NOT EXISTS db_comm (
   comm_note INT,
   usr_id INT NOT NULL,
   post_id INT NOT NULL,
+  PRIMARY KEY (comm_id),
   FOREIGN KEY (usr_id) REFERENCES db_usr(usr_id),
-  FOREIGN KEY (post_id) REFERENCES db_post(post_id)
+  FOREIGN KEY (post_id) REFERENCES db_post(post_id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE IF NOT EXISTS db_likes (
@@ -39,6 +40,8 @@ CREATE TABLE IF NOT EXISTS db_likes (
   post_id INT NOT NULL,
   usr_id INT NOT NULL,
   PRIMARY KEY (like_id),
-  FOREIGN KEY (post_id) REFERENCES db_post(post_id),
+  FOREIGN KEY (post_id) REFERENCES db_post(post_id) ON DELETE CASCADE,
   FOREIGN KEY (usr_id) REFERENCES db_usr(usr_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+COMMIT;
