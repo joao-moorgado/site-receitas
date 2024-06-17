@@ -9,7 +9,8 @@ if (isset($_POST['post_id'])) {
     header("Location: feed.php");
     exit();
   } else {
-    echo "Erro ao registrar a curtida.";
+    header("Location: feed.php");
+    exit();
   }
 }
 ?>
