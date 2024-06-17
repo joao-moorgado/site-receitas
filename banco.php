@@ -46,7 +46,7 @@ function registerPost(string $ttl, string $bdy, int $usr_id) {
 }
 
 // Função para curtir post
-function likePost(int $post_id, int $usr_id): bool {
+function LikePost(int $post_id, int $usr_id): bool {
     global $banco;
     
     // Verifica se o usuário já curtiu o post
@@ -57,8 +57,11 @@ function likePost(int $post_id, int $usr_id): bool {
     $result_check_like = $stmt_check_like->get_result();
     
     if ($result_check_like->num_rows > 0) {
-        // Usuário já curtiu o post
-        return false;
+        // Usuário já curtiu o post, remove o like
+        $sql_unlike = "DELETE FROM db_likes WHERE post_id = ? AND usr_id = ?";
+        $stmt_unlike = $banco->prepare($sql_unlike);
+        $stmt_unlike->bind_param("ii", $post_id, $usr_id);
+        return $stmt_unlike->execute();
     } else {
         // Usuário ainda não curtiu o post, insere o like
         $sql_like = "INSERT INTO db_likes (post_id, usr_id) VALUES (?, ?)";

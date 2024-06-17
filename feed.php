@@ -92,7 +92,22 @@ $result_posts = $banco->query("SELECT db_post.post_id, db_post.post_body, db_pos
                     <?php endif; ?>
                     <form action="like.php" method="post">
                         <input type="hidden" name="post_id" value="<?php echo $post->post_id; ?>">
-                        <button type="submit">Curtir (<?php echo countLikes($post->post_id); ?>)</button>
+                        <button type="submit">
+                            <?php
+                                // Verifica se o usuário já curtiu o post
+                                $stmt_check_like = $banco->prepare("SELECT * FROM db_likes WHERE post_id = ? AND usr_id = ?");
+                                $stmt_check_like->bind_param("ii", $post->post_id, $_SESSION['usr_id']);
+                                $stmt_check_like->execute();
+                                $result_check_like = $stmt_check_like->get_result();
+                                
+                                if ($result_check_like->num_rows > 0) {
+                                    echo 'Descurtir';
+                                } else {
+                                    echo 'Curtir';
+                                }
+                            ?>
+                            (<?php echo countLikes($post->post_id); ?>)
+                        </button>
                     </form>
                 </div>
 
