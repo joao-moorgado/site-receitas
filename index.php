@@ -17,24 +17,7 @@ $result_posts = $banco->query("SELECT db_post.post_id, db_post.post_body, db_pos
     <title>Estouro de Pilha</title>
     <link rel="stylesheet" href="estilos.css">
     <style>
-        .post {
-            margin-bottom: 20px;
-            padding: 10px;
-            border: 1px solid #ccc;
-        }
-        .post-info {
-            margin-top: 10px;
-            font-size: 0.8em;
-            color: #666;
-        }
-        .comments {
-            margin-top: 10px;
-        }
-        .comment {
-            margin-top: 10px;
-            padding: 5px;
-            border: 1px solid #eee;
-        }
+        
     </style>
 </head>
 <body>

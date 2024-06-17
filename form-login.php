@@ -10,7 +10,7 @@
     <input type="submit" value="Login">
 
     <p>Não tem uma conta? 
-        <a href="register.php">Cadastrar-se</a>
+        <a href="register.php">Cadastre-se</a>
     </p>
 
 </form>

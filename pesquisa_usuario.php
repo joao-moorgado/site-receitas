@@ -60,19 +60,19 @@ if (isset($_GET['pesquisa'])) {
         </div>
     </header>
 
-    <main>
+    <main class="pesquisa-usuario">
         <!-- Formulário de pesquisa -->
      <form action="" method="GET" class="search-form">
         <input type="text" name="pesquisa" placeholder="Pesquisar usuários">
-        <button type="submit">Pesquisar</button>
+        <button type="submit">Pesquisar</button> <br>
     </form>
 
         <!-- Exibição dos resultados da pesquisa -->
     <?php if (isset($termo_pesquisa)): ?>
-        <h2>Resultados da Pesquisa por "<?php echo htmlspecialchars($termo_pesquisa); ?>"</h2>
+        <h2>Resultados da Pesquisa por "<?php echo htmlspecialchars($_GET['pesquisa']); ?>"</h2>
         <?php if (!empty($usuarios_encontrados)): ?>
             <ul class="search-results">
-                <?php foreach ($usuarios_encontrados as $usuario): ?>
+                <?php foreach ($usuarios_encontrados as $usuario): ?> <br>
                     <li>
                         <h3><?php echo htmlspecialchars($usuario->usr_name); ?></h3>
                         <p><a href="perfil_usuario.php?usr_id=<?php echo $usuario->usr_id; ?>">Ver perfil</a></p>
