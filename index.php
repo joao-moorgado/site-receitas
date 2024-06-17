@@ -46,7 +46,7 @@ $result_posts = $banco->query("SELECT db_post.post_id, db_post.post_body, db_pos
         <ul>
             <li><a href="pesquisa_usuario.php">Usuários</a></li>
             <li><a href="#">Mais Votadas</a></li>
-            <li><a href="#">Sem Resposta</a></li>
+            <li><a href="#">Tags</a></li>
             <li><a href="#">Categorias</a></li>
         </ul>
     </aside>

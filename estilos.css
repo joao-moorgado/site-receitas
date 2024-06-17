@@ -25,6 +25,7 @@ header {
     position: fixed;
     top: 0;
     width: 100%;
+    z-index: 1000;
     }
     
     header h1 {
@@ -165,6 +166,37 @@ main {
 .feed {
     width: 75%;
     margin-top: 100px;
+}
+
+.new-post {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.new-post textarea {
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 1rem;
+}
+
+.new-post button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    background: #007BFF;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.new-post button:hover {
+    background: #0056b3;
 }
 
 .post {

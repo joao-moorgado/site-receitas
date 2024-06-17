@@ -9,5 +9,5 @@
     <input type="password" id="cnfpwd" name="cnfpwd" required autocomplete="off"><br><br>
 
     
-    <button type="submit">Registrar</button>
+    <input type="submit" value="Registrar">
 </form>
