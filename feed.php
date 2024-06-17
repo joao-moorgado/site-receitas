@@ -125,7 +125,7 @@ $result_posts = $banco->query("SELECT db_post.post_id, db_post.post_body, db_pos
                         <div class="comment">
                             <p><?php echo nl2br(htmlspecialchars($comment->comm_body)); ?></p>
                             <span>Por: <?php echo htmlspecialchars($comment->usr_name); ?></span>
-                            <?php if ($logged_in && ($comment->usr_id == $_SESSION['usr_id'] || $post->usr_id == $_SESSION['usr_id'])): ?>
+                            <?php if ($logged_in && ($comment->usr_id == $_SESSION['usr_id'])): ?>
                                 <form action="delete_comment.php" method="post" style="display: inline;">
                                     <input type="hidden" name="comm_id" value="<?php echo $comment->comm_id; ?>">
                                     <button type="submit">Apagar Comentário</button>
