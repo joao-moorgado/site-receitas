@@ -6,6 +6,7 @@ $usr = $_SESSION['usr'] ?? '';
 require_once 'banco.php';
 
 
+
 // Busca todas as postagens
 $result_posts = $banco->query("SELECT db_post.post_id, db_post.post_body, db_post.usr_id, db_usr.usr_name FROM db_post JOIN db_usr ON db_post.usr_id = db_usr.usr_id ORDER BY db_post.post_id DESC");
 ?>
@@ -59,6 +60,28 @@ $result_posts = $banco->query("SELECT db_post.post_id, db_post.post_body, db_pos
             </div>
         <?php endif; ?>
 
+        <?php while ($post = $result_posts->fetch_object()):?>
+            <div class="post">
+                <h2><?php echo htmlspecialchars($post->usr_name);?></h2>
+                <p><?php echo nl2br(htmlspecialchars($post->post_body));?></p>
+                <div class="post-info">
+                <span>Autor: <?php echo htmlspecialchars($post->usr_name);?></span>
+                <span>Data: <?php echo htmlspecialchars($post->post_id);?></span>
+                <?php if ($logged_in && $usr === $post->usr_name):?>
+                    <form action="delete_post.php" method="post" style="display:inline;">
+                    <input type="hidden" name="post_id" value="<?php echo $post->post_id;?>">
+                    <button type="submit">Apagar</button>
+                    </form>
+                <?php endif;?>
+                <form action="like.php" method="post">
+                    <input type="hidden" name="post_id" value="<?php echo $post->post_id;?>">
+                    <button type="submit">Curtir (<?php echo countLikes($post->post_id);?>)</button>
+                </form>
+                </div>
+            </div>
+        <?php endwhile;?>
+
+
         <!-- Exibição das postagens -->
         <?php while ($post = $result_posts->fetch_object()): ?>
             <div class="post">
@@ -76,6 +99,9 @@ $result_posts = $banco->query("SELECT db_post.post_id, db_post.post_body, db_pos
                 </div>
             </div>
         <?php endwhile; ?>
+
+        
+
     </section>
 </main>
 

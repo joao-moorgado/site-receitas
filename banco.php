@@ -46,5 +46,24 @@
         }
       }
 
+      function likePost(int $post_id, int $usr_id) {
+        global $banco;
+        $sql = "INSERT INTO db_likes (post_id, usr_id) VALUES (?,?)";
+        $stmt = $banco->prepare($sql);
+        $stmt->bind_param("ii", $post_id, $usr_id);
+        $stmt->execute();
+        return $stmt->affected_rows > 0;
+      }
+
+      function countLikes(int $post_id) {
+        global $banco;
+        $sql = "SELECT COUNT(*) AS likes FROM db_likes WHERE post_id =?";
+        $stmt = $banco->prepare($sql);
+        $stmt->bind_param("i", $post_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_object()->likes;
+      }
+
   ?>
 </pre>

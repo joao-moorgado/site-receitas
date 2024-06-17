@@ -66,16 +66,16 @@ $result_posts = $stmt_posts->get_result();
 
 <main class="container">
     <section class="feed">
-        <h2>Perfil de <?php echo htmlspecialchars($usuario->usr_name); ?></h2><br>
-        <h2>Postagens de <?php echo htmlspecialchars($usuario->usr_name); ?>:</h2>
-        <?php while ($post = $result_posts->fetch_object()): ?>
+    <h2>Postagens de <?php echo htmlspecialchars($usuario->usr_name);?>:</h2>
+        <?php while ($post = $result_posts->fetch_object()):?>
             <div class="post">
-                <p><?php echo nl2br(htmlspecialchars($post->post_body)); ?></p>
+                <p><?php echo nl2br(htmlspecialchars($post->post_body));?></p>
                 <div class="post-info">
-                    <span>Data: <?php echo htmlspecialchars($post->post_id); ?></span>
+                    <span>Data: <?php echo htmlspecialchars($post->post_id);?></span>
+                    <span>Curtidas: <?php echo countLikes($post->post_id);?></span>
                 </div>
             </div>
-        <?php endwhile; ?>
+        <?php endwhile;?>
     </section>
 </main>
 

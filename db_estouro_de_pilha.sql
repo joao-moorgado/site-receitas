@@ -33,3 +33,12 @@ CREATE TABLE IF NOT EXISTS db_comm (
   FOREIGN KEY (usr_id) REFERENCES db_usr(usr_id),
   FOREIGN KEY (post_id) REFERENCES db_post(post_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE IF NOT EXISTS db_likes (
+  like_id INT NOT NULL AUTO_INCREMENT,
+  post_id INT NOT NULL,
+  usr_id INT NOT NULL,
+  PRIMARY KEY (like_id),
+  FOREIGN KEY (post_id) REFERENCES db_post(post_id),
+  FOREIGN KEY (usr_id) REFERENCES db_usr(usr_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
