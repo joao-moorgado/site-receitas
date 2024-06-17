@@ -3,9 +3,7 @@ session_start();
 $logged_in = $_SESSION['logged_in'] ?? false;
 $usr = $_SESSION['usr'] ?? '';
 
-require_once 'banco.php';
-
-
+require_once 'banco.php'; // Inclui o arquivo onde countLikes() já está definido
 
 // Busca todas as postagens
 $result_posts = $banco->query("SELECT db_post.post_id, db_post.post_body, db_post.usr_id, db_usr.usr_name FROM db_post JOIN db_usr ON db_post.usr_id = db_usr.usr_id ORDER BY db_post.post_id DESC");
@@ -18,6 +16,26 @@ $result_posts = $banco->query("SELECT db_post.post_id, db_post.post_body, db_pos
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Estouro de Pilha</title>
     <link rel="stylesheet" href="estilos.css">
+    <style>
+        .post {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+        .post-info {
+            margin-top: 10px;
+            font-size: 0.8em;
+            color: #666;
+        }
+        .comments {
+            margin-top: 10px;
+        }
+        .comment {
+            margin-top: 10px;
+            padding: 5px;
+            border: 1px solid #eee;
+        }
+    </style>
 </head>
 <body>
 
@@ -29,7 +47,7 @@ $result_posts = $banco->query("SELECT db_post.post_id, db_post.post_body, db_pos
                 <?php if ($logged_in): ?>
                     <li>Olá, <?php echo htmlspecialchars($usr); ?>!</li>
                     <li><a href="meu_perfil.php">Meu Perfil</a></li>
-                    <li><a href="logout.php">Logout</a></li>   
+                    <li><a href="logout.php">Logout</a></li>
                 <?php else: ?>
                     <li>Bem-vindo!</li>
                     <li><a href="login.php">Login</a></li>
@@ -60,48 +78,58 @@ $result_posts = $banco->query("SELECT db_post.post_id, db_post.post_body, db_pos
             </div>
         <?php endif; ?>
 
-        <?php while ($post = $result_posts->fetch_object()):?>
-            <div class="post">
-                <h2><?php echo htmlspecialchars($post->usr_name);?></h2>
-                <p><?php echo nl2br(htmlspecialchars($post->post_body));?></p>
-                <div class="post-info">
-                <span>Autor: <?php echo htmlspecialchars($post->usr_name);?></span>
-                <span>Data: <?php echo htmlspecialchars($post->post_id);?></span>
-                <?php if ($logged_in && $usr === $post->usr_name):?>
-                    <form action="delete_post.php" method="post" style="display:inline;">
-                    <input type="hidden" name="post_id" value="<?php echo $post->post_id;?>">
-                    <button type="submit">Apagar</button>
-                    </form>
-                <?php endif;?>
-                <form action="like.php" method="post">
-                    <input type="hidden" name="post_id" value="<?php echo $post->post_id;?>">
-                    <button type="submit">Curtir (<?php echo countLikes($post->post_id);?>)</button>
-                </form>
-                </div>
-            </div>
-        <?php endwhile;?>
-
-
-        <!-- Exibição das postagens -->
         <?php while ($post = $result_posts->fetch_object()): ?>
             <div class="post">
                 <h2><?php echo htmlspecialchars($post->usr_name); ?></h2>
                 <p><?php echo nl2br(htmlspecialchars($post->post_body)); ?></p>
                 <div class="post-info">
                     <span>Autor: <?php echo htmlspecialchars($post->usr_name); ?></span>
-                    <span>Data: <?php echo htmlspecialchars($post->post_id); ?></span>
                     <?php if ($logged_in && $usr === $post->usr_name): ?>
                         <form action="delete_post.php" method="post" style="display:inline;">
                             <input type="hidden" name="post_id" value="<?php echo $post->post_id; ?>">
                             <button type="submit">Apagar</button>
                         </form>
                     <?php endif; ?>
+                    <form action="like.php" method="post">
+                        <input type="hidden" name="post_id" value="<?php echo $post->post_id; ?>">
+                        <button type="submit">Curtir (<?php echo countLikes($post->post_id); ?>)</button>
+                    </form>
+                </div>
+
+                <!-- Seção de Comentários -->
+                <div class="comments">
+                    <h3>Comentários</h3>
+                    <?php
+                    $sql_comments = "SELECT db_comm.comm_id, db_comm.comm_body, db_comm.usr_id, db_usr.usr_name FROM db_comm JOIN db_usr ON db_comm.usr_id = db_usr.usr_id WHERE db_comm.post_id = ? ORDER BY db_comm.comm_id ASC";
+                    $stmt_comments = $banco->prepare($sql_comments);
+                    $stmt_comments->bind_param("i", $post->post_id);
+                    $stmt_comments->execute();
+                    $result_comments = $stmt_comments->get_result();
+                    while ($comment = $result_comments->fetch_object()):
+                    ?>
+                        <div class="comment">
+                            <p><?php echo nl2br(htmlspecialchars($comment->comm_body)); ?></p>
+                            <span>Por: <?php echo htmlspecialchars($comment->usr_name); ?></span>
+                            <?php if ($logged_in && ($comment->usr_id == $_SESSION['usr_id'] || $post->usr_id == $_SESSION['usr_id'])): ?>
+                                <form action="delete_comment.php" method="post" style="display: inline;">
+                                    <input type="hidden" name="comm_id" value="<?php echo $comment->comm_id; ?>">
+                                    <button type="submit">Apagar Comentário</button>
+                                </form>
+                            <?php endif; ?>
+                        </div>
+                    <?php endwhile; ?>
+
+                    <!-- Formulário para novo comentário -->
+                    <?php if ($logged_in): ?>
+                        <form action="comment.php" method="post">
+                            <textarea name="comm_body" rows="2" cols="50" placeholder="Escreva um comentário..." required></textarea><br>
+                            <input type="hidden" name="post_id" value="<?php echo $post->post_id; ?>">
+                            <button type="submit">Comentar</button>
+                        </form>
+                    <?php endif; ?>
                 </div>
             </div>
         <?php endwhile; ?>
-
-        
-
     </section>
 </main>
 
@@ -113,4 +141,3 @@ $result_posts = $banco->query("SELECT db_post.post_id, db_post.post_body, db_pos
 
 </body>
 </html>
-

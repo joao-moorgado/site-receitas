@@ -13,18 +13,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     require_once 'banco.php';
 
     // Verifica se a postagem pertence ao usuário logado
-    $result = $banco->query("SELECT * FROM db_post JOIN db_usr ON db_post.usr_id = db_usr.usr_id WHERE db_post.post_id = $post_id AND db_usr.usr_name = '$usr'");
+    $stmt_check_post = $banco->prepare("SELECT * FROM db_post JOIN db_usr ON db_post.usr_id = db_usr.usr_id WHERE db_post.post_id = ? AND db_usr.usr_name = ?");
+    $stmt_check_post->bind_param('is', $post_id, $usr);
+    $stmt_check_post->execute();
+    $result_check_post = $stmt_check_post->get_result();
 
-    if ($result->num_rows > 0) {
-        // Apaga a postagem
-        $stmt = $banco->prepare("DELETE FROM db_post WHERE post_id = ?");
-        $stmt->bind_param('i', $post_id);
-
-        if ($stmt->execute()) {
-            header("Location: feed.php"); // Redireciona para o feed após a exclusão
-            exit();
+    if ($result_check_post->num_rows > 0) {
+        // Excluir comentários relacionados à postagem
+        $stmt_delete_comments = $banco->prepare("DELETE FROM db_comm WHERE post_id = ?");
+        $stmt_delete_comments->bind_param('i', $post_id);
+        if ($stmt_delete_comments->execute()) {
+            // Apaga a postagem
+            $stmt_delete_post = $banco->prepare("DELETE FROM db_post WHERE post_id = ?");
+            $stmt_delete_post->bind_param('i', $post_id);
+            
+            if ($stmt_delete_post->execute()) {
+                header("Location: feed.php"); // Redireciona para o feed após a exclusão
+                exit();
+            } else {
+                echo "Erro ao apagar a postagem: " . $stmt_delete_post->error;
+            }
         } else {
-            echo "Erro ao apagar a postagem: " . $stmt->error;
+            echo "Erro ao apagar os comentários: " . $stmt_delete_comments->error;
         }
     } else {
         echo "Você não tem permissão para apagar esta postagem.";
