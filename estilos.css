@@ -30,6 +30,8 @@ header {
     
     header h1 {
     float: left;
+    font-size:xx-large;
+    font-display:inherit ;
     }
     
     header nav {
