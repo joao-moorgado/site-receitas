@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt_delete_post->bind_param('i', $post_id);
             
             if ($stmt_delete_post->execute()) {
-                header("Location: feed.php"); // Redireciona para o feed após a exclusão
+                header("Location: index.php"); // Redireciona para o feed após a exclusão
                 exit();
             } else {
                 echo "Erro ao apagar a postagem: " . $stmt_delete_post->error;

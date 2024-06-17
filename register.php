@@ -14,7 +14,7 @@
             <nav>
                 <ul>
                     <li>Bem-vindo!</li>
-                    <li><a href="feed.php">Inicio</a></li>
+                    <li><a href="index.php">Inicio</a></li>
                 </ul>
             </nav>
         </div>

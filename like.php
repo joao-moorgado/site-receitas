@@ -7,14 +7,14 @@
     $post_id = $_POST['post_id'];
     $usr_id = $_SESSION['usr_id'];
     if ($usr_id && likePost($post_id, $usr_id)) {
-      header("Location: feed.php");
+      header("Location: index.php");
       exit();
     } else {
-      header("Location: feed.php");
+      header("Location: index.php");
       exit();
     }
   } else{
-      header("Location: feed.php");
+      header("Location: index.php");
       exit();
   }
 ?>

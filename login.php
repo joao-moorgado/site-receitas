@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['usr'] = $obj->usr_name; // Corrigido para usr_name
             $_SESSION['usr_id'] = $obj->usr_id; //pegando id para mostrar postagens
             $_SESSION['logged_in'] = true;
-            header("Location: feed.php");
+            header("Location: index.php");
             exit();
         } else {
             echo "<br> Falha de Login";
@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']) {
-    header("Location: feed.php");
+    header("Location: index.php");
     exit();
 }
 ?>
@@ -49,7 +49,7 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']) {
             <nav>
                 <ul>
                     <li>Bem-vindo!</li>
-                    <li><a href="feed.php">Inicio</a></li>
+                    <li><a href="index.php">Inicio</a></li>
                 </ul>
             </nav>
         </div>

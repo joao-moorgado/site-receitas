@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($usr_id) {
         if (registerComment($comm_body, $usr_id, $post_id)) {
-            header("Location: feed.php");
+            header("Location: index.php");
             exit();
         } else {
             echo "Erro ao registrar o comentário.";

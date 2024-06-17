@@ -31,7 +31,7 @@ $result_posts = $stmt_posts->get_result();
         <nav>
             <ul>
                 <li>Olá, <?php echo htmlspecialchars($usr); ?>!</li>
-                <li><a href="feed.php">Inicio</a></li>
+                <li><a href="index.php">Inicio</a></li>
                 <li><a href="logout.php">Logout</a></li>
             </ul>
         </nav>

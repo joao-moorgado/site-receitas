@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt_delete_comment->bind_param('i', $comm_id);
         
         if ($stmt_delete_comment->execute()) {
-            header("Location: feed.php"); // Redireciona para o feed após a exclusão
+            header("Location: index.php"); // Redireciona para o feed após a exclusão
             exit();
         } else {
             echo "Erro ao apagar o comentário: " . $stmt_delete_comment->error;

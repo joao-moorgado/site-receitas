@@ -50,12 +50,12 @@ $result_posts = $stmt_posts->get_result();
             <ul>
                 <?php if ($logged_in): ?>
                     <li>Olá, <?php echo htmlspecialchars($usr); ?>!</li>
-                    <li><a href="feed.php">Início</a></li>
+                    <li><a href="index.php">Início</a></li>
                     <li><a href="meu_perfil.php">Meu Perfil</a></li>
                     <li><a href="logout.php">Logout</a></li>
                 <?php else: ?>
                     <li>Bem-vindo!</li>
-                    <li><a href="feed.php">Início</a></li>
+                    <li><a href="index.php">Início</a></li>
                     <li><a href="login.php">Login</a></li>
                     <li><a href="register.php">Cadastre-se</a></li>
                 <?php endif; ?>

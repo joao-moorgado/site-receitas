@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Executa a declaração SQL
         if ($stmt->execute()) {
             // Redireciona para a página de feed após a postagem ser criada com sucesso
-            header("Location: feed.php");
+            header("Location: index.php");
             exit();
         } else {
             // Exibe uma mensagem de erro se a execução da declaração falhar
