@@ -8,6 +8,11 @@ $dbname = "db_estouro_de_pilha";
 
 $banco = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
 
+// Verifica a conexão
+if ($banco->connect_error) {
+    die("Conexão falhou: " . $banco->connect_error);
+}
+
 // Função para buscar usuário
 function buscarUsuario(string $usr) {
     global $banco;
@@ -18,17 +23,31 @@ function buscarUsuario(string $usr) {
     return $stmt->get_result();
 }
 
+// Função para verificar se o usuário já existe
+function userExists(string $usr): bool {
+    $result = buscarUsuario($usr);
+    return $result->num_rows > 0;
+}
+
 // Função para registrar usuário
-function registerUser(string $username, string $password) {
+function registerUser(string $username, string $password): bool {
     global $banco;
+
+    if (userExists($username)) {
+        echo "O nome de usuário já existe. Por favor, escolha outro nome de usuário.";
+        return false;
+    }
+
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
     $sql = "INSERT INTO db_usr (usr_name, usr_password) VALUES (?, ?)";
     $stmt = $banco->prepare($sql);
     $stmt->bind_param("ss", $username, $hashed_password);
     if ($stmt->execute()) {
         echo "Usuário registrado com sucesso.";
+        return true;
     } else {
         echo "Erro ao registrar o usuário: " . $stmt->error;
+        return false;
     }
 }
 

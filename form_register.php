@@ -8,6 +8,5 @@
     <label for="confirm_password">Confirmar senha:</label><br>
     <input type="password" id="cnfpwd" name="cnfpwd" required autocomplete="off"><br><br>
 
-    
     <input type="submit" value="Registrar">
 </form>

@@ -15,7 +15,7 @@
             <nav>
                 <ul>
                     <li>Bem-vindo!</li>
-                    <li><a href="index.php">Inicio</a></li>
+                    <li><a href="index.php">Início</a></li>
                 </ul>
             </nav>
         </div>
@@ -24,36 +24,47 @@
     <main class="container">
         <section class="form">
             <?php
-
                 session_start();
-
-                require_once "form_register.php";
                 require_once "banco.php";
 
-                if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                $error_message = '';
 
+                if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     // Obtém os dados do formulário
                     $usr = $_POST['usr'];
                     $pwd = $_POST['psw'];
                     $cnfpwd = $_POST['cnfpwd'];
 
                     if ($pwd !== $cnfpwd) {
-                        echo 'As senhas não coincidem.';
+                        $error_message = 'As senhas não coincidem.';
                     } else {
-                        // Chama a função para registrar o usuário
-                        registerUser($usr, $pwd);
+                        // Verifica se o usuário já existe
+                        if (buscarUsuario($usr)->num_rows > 0) {
+                            $error_message = 'O nome de usuário já existe. Por favor, escolha outro nome de usuário.';
+                        } else {
+                            // Tenta registrar o usuário
+                            if (registerUser($usr, $pwd)) {
+                                // Definir um sinalizador de cadastro bem-sucedido na sessão
+                                $_SESSION['cadastro_sucesso'] = true;
 
-                        // Definir um sinalizador de cadastro bem-sucedido na sessão
-                        $_SESSION['cadastro_sucesso'] = true;
-
-                        // Redirecionar para a página de sucesso
-                        header("Location: sucesso.php");
-                        exit();
+                                // Redirecionar para a página de sucesso
+                                header("Location: sucesso.php");
+                                exit();
+                            } else {
+                                $error_message = 'Erro ao registrar o usuário. Tente novamente.';
+                            }
+                        }
                     }
                 }
+
+                if (!empty($error_message)) {
+                    echo '<div class="alert alert-danger">' . $error_message . '</div>';
+                }
+
+                // Inclui o formulário de registro
+                include "form_register.php";
             ?>
         </section>
-
     </main>
 
     <footer>
