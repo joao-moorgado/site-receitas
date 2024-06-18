@@ -6,10 +6,7 @@ $usr = $_SESSION['usr'] ?? '';
 require_once 'banco.php'; // Inclui o arquivo onde countLikes() já está definido
 
 // Busca todas as postagens
-$result_posts = $banco->query("SELECT db_post.post_id, db_post.post_body, db_post.usr_id, db_usr.usr_name 
-                                FROM db_post 
-                                JOIN db_usr ON db_post.usr_id = db_usr.usr_id 
-                                ORDER BY db_post.post_id DESC");
+$result_posts = $banco->query("SELECT db_post.post_id, db_post.post_body, db_post.usr_id, db_usr.usr_name FROM db_post JOIN db_usr ON db_post.usr_id = db_usr.usr_id ORDER BY db_post.post_id DESC");
 ?>
 
 <!DOCTYPE html>
@@ -101,11 +98,7 @@ $result_posts = $banco->query("SELECT db_post.post_id, db_post.post_body, db_pos
                 <div class="comments">
                     <h3>Comentários</h3>
                     <?php
-                    $sql_comments = "SELECT db_comm.comm_id, db_comm.comm_body, db_comm.usr_id, db_usr.usr_name 
-                                     FROM db_comm 
-                                     JOIN db_usr ON db_comm.usr_id = db_usr.usr_id 
-                                     WHERE db_comm.post_id = ? 
-                                     ORDER BY db_comm.comm_id ASC";
+                    $sql_comments = "SELECT db_comm.comm_id, db_comm.comm_body, db_comm.usr_id, db_usr.usr_name FROM db_comm JOIN db_usr ON db_comm.usr_id = db_usr.usr_id WHERE db_comm.post_id = ? ORDER BY db_comm.comm_id ASC";
                     $stmt_comments = $banco->prepare($sql_comments);
                     $stmt_comments->bind_param("i", $post->post_id);
                     $stmt_comments->execute();
