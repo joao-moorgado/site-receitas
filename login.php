@@ -3,6 +3,8 @@ session_start();
 
 require_once 'banco.php';
 
+$error_message = '';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $usr = $_POST['usr'];
     $pwd = $_POST['pwd'];
@@ -11,18 +13,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $busca = buscarUsuario($usr);
 
     if ($busca->num_rows == 0) {
-        echo "<br> Usuário não existe";
+        $error_message = 'Usuário não existe.';
     } else {    
         $obj = $busca->fetch_object();
 
         if (password_verify($pwd, $obj->usr_password)) {
             $_SESSION['usr'] = $obj->usr_name; // Corrigido para usr_name
-            $_SESSION['usr_id'] = $obj->usr_id; //pegando id para mostrar postagens
+            $_SESSION['usr_id'] = $obj->usr_id; // Pegando id para mostrar postagens
             $_SESSION['logged_in'] = true;
             header("Location: index.php");
             exit();
         } else {
-            echo "<br> Falha de Login";
+            $error_message = 'Senha incorreta.';
         }
     }
 }
@@ -50,7 +52,7 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']) {
             <nav>
                 <ul>
                     <li>Bem-vindo!</li>
-                    <li><a href="index.php">Inicio</a></li>
+                    <li><a href="index.php">Início</a></li>
                 </ul>
             </nav>
         </div>
@@ -58,7 +60,13 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']) {
 
     <main class="container">
         <section class="form">
-            <?php require_once 'form-login.php'; ?>
+            <?php
+                if (!empty($error_message)) {
+                    echo '<div class="alert alert-danger">' . $error_message . '</div>';
+                }
+
+                require_once 'form-login.php';
+            ?>
         </section>
     </main>
 

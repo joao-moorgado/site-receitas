@@ -51,6 +51,8 @@ function registerUser(string $username, string $password): bool {
     }
 }
 
+
+
 // Função para registrar post
 function registerPost(string $ttl, string $bdy, int $usr_id) {
     global $banco;
