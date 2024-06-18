@@ -48,7 +48,7 @@ INSERT INTO db_usr (usr_name, usr_password) VALUES
 ('Joao', '123'),
 ('Gabi', '456'),
 ('Alex', '789'),
-('Pabro', '000');
+('Pablo', '000');
 
 INSERT INTO db_post (post_tittle, post_body, usr_id) VALUES 
 ('Erro de "Fatal error: Uncaught Error: Call to undefined function" em PHP', 'Ao tentar executar um código PHP, recebo o erro "Fatal error: Uncaught Error: Call to undefined function". O que pode estar causando o problema e como corrigi-lo?', 1),
