@@ -29,8 +29,7 @@ $result_posts = $banco->query("SELECT db_post.post_id, db_post.post_body, db_pos
         <nav>
             <ul>
                 <?php if ($logged_in): ?>
-                    <li>Olá, <?php echo htmlspecialchars($usr); ?>!</li>
-                    <li><a href="meu_perfil.php">Meu Perfil</a></li>
+                    <li>Olá, <?php echo htmlspecialchars($usr); ?>!</li>                 
                     <li><a href="logout.php">Logout</a></li>
                 <?php else: ?>
                     <li>Bem-vindo!</li>
@@ -46,9 +45,9 @@ $result_posts = $banco->query("SELECT db_post.post_id, db_post.post_body, db_pos
     <aside class="sidebar">
         <ul>
             <li><a href="pesquisa_usuario.php">Usuários</a></li>
-            <li><a href="#">Mais Votadas</a></li>
-            <li><a href="#">Tags</a></li>
-            <li><a href="#">Categorias</a></li>
+            <?php if ($logged_in): ?>
+                <li><a href="meu_perfil.php">Meu Perfil</a></li>
+            <?php endif; ?>
         </ul>
     </aside>
 
@@ -107,8 +106,7 @@ $result_posts = $banco->query("SELECT db_post.post_id, db_post.post_body, db_pos
                     while ($comment = $result_comments->fetch_object()):
                     ?>
                         <div class="comment">
-                            <p><?php echo nl2br(htmlspecialchars($comment->comm_body)); ?></p>
-                            <span>Por: <?php echo htmlspecialchars($comment->usr_name); ?></span>
+                            <p><b><?php echo htmlspecialchars($comment->usr_name); ?>: </b><?php echo nl2br(htmlspecialchars($comment->comm_body)); ?></p>
                             <?php if ($logged_in && ($comment->usr_id == $_SESSION['usr_id'])): ?>
                                 <form action="delete_comment.php" method="post" style="display: inline;">
                                     <input type="hidden" name="comm_id" value="<?php echo $comment->comm_id; ?>">

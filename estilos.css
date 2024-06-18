@@ -1,4 +1,4 @@
-/* Reset básico */
+/* Geral */
 * {
     margin: 0;
     padding: 0;
@@ -54,19 +54,18 @@ header {
     font-weight: bold;
     }
 
-/* Main (geral) */
+/* Main */
 main {
     display: flex;
     margin-top: 80px;
 }
 
-/* Específico para a página de pesquisa de usuários */
+/* Pesquisa de usuario */
 .pesquisa-usuario {
     margin-top: 100px;
     display: flex;
     flex-direction: column;
     align-items: left;
-    margin-left: 10%;
 }
 
 .pesquisa-usuario .search-form {
@@ -187,12 +186,12 @@ main {
 }
 
 .new-post button {
-    padding: 10px 20px;
+    padding: 5px;
     font-size: 1rem;
     border: none;
     background: #007BFF;
     color: #fff;
-    border-radius: 5px;
+    border-radius: 2px;
     cursor: pointer;
     margin-top: 10px;
 }
@@ -236,17 +235,18 @@ main {
     margin-top: 10px;
     padding: 5px;
     border: 1px solid #eee;
+    display: flex;
 }
 
 /* Rodapé */
 footer {
+    display: flex;
+    flex-direction: column;
+    margin-top: auto;
     background: #333;
     color: #fff;
     text-align: center;
     padding: 1rem 0;
-    margin-top: 20px;
-    position: relative;
-    bottom: 0;
     width: 100%;
 }
 

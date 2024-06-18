@@ -32,7 +32,6 @@ $result_posts = $stmt_posts->get_result();
         <nav>
             <ul>
                 <li>Olá, <?php echo htmlspecialchars($usr); ?>!</li>
-                <li><a href="index.php">Inicio</a></li>
                 <li><a href="logout.php">Logout</a></li>
             </ul>
         </nav>
@@ -40,6 +39,15 @@ $result_posts = $stmt_posts->get_result();
 </header>
 
 <main class="container">
+    <aside class="sidebar">
+        <ul>
+            <li><a href="pesquisa_usuario.php">Usuários</a></li>
+            <li><a href="index.php">Inicio</a></li>
+        </ul>
+    </aside>
+
+
+
     <section class="feed">
         <h2>Minhas Postagens</h2>
         <?php while ($post = $result_posts->fetch_object()): ?>
