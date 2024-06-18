@@ -9,69 +9,71 @@
 </head>
 <body>
     
-    <header>
-        <div class="container">
-            <h1>Estouro de Pilha</h1>
-            <nav>
-                <ul>
-                    <li>Bem-vindo!</li>
-                    <li><a href="index.php">Início</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+    <div class="container-flex">
+        <header>
+            <div class="container">
+                <h1>Estouro de Pilha</h1>
+                <nav>
+                    <ul>
+                        <li>Bem-vindo!</li>
+                        <li><a href="index.php">Início</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
 
-    <main class="container">
-        <section class="form">
-            <?php
-                session_start();
-                require_once "banco.php";
+        <main class="container">
+            <section class="form">
+                <?php
+                    session_start();
+                    require_once "banco.php";
 
-                $error_message = '';
+                    $error_message = '';
 
-                if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                    // Obtém os dados do formulário
-                    $usr = $_POST['usr'];
-                    $pwd = $_POST['psw'];
-                    $cnfpwd = $_POST['cnfpwd'];
+                    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                        // Obtém os dados do formulário
+                        $usr = $_POST['usr'];
+                        $pwd = $_POST['psw'];
+                        $cnfpwd = $_POST['cnfpwd'];
 
-                    if ($pwd !== $cnfpwd) {
-                        $error_message = 'As senhas não coincidem.';
-                    } else {
-                        // Verifica se o usuário já existe
-                        if (buscarUsuario($usr)->num_rows > 0) {
-                            $error_message = 'O nome de usuário já existe. Por favor, escolha outro nome de usuário.';
+                        if ($pwd !== $cnfpwd) {
+                            $error_message = 'As senhas não coincidem.';
                         } else {
-                            // Tenta registrar o usuário
-                            if (registerUser($usr, $pwd)) {
-                                // Definir um sinalizador de cadastro bem-sucedido na sessão
-                                $_SESSION['cadastro_sucesso'] = true;
-
-                                // Redirecionar para a página de sucesso
-                                header("Location: sucesso.php");
-                                exit();
+                            // Verifica se o usuário já existe
+                            if (buscarUsuario($usr)->num_rows > 0) {
+                                $error_message = 'O nome de usuário já existe. Por favor, escolha outro nome de usuário.';
                             } else {
-                                $error_message = 'Erro ao registrar o usuário. Tente novamente.';
+                                // Tenta registrar o usuário
+                                if (registerUser($usr, $pwd)) {
+                                    // Definir um sinalizador de cadastro bem-sucedido na sessão
+                                    $_SESSION['cadastro_sucesso'] = true;
+
+                                    // Redirecionar para a página de sucesso
+                                    header("Location: sucesso.php");
+                                    exit();
+                                } else {
+                                    $error_message = 'Erro ao registrar o usuário. Tente novamente.';
+                                }
                             }
                         }
                     }
-                }
 
-                if (!empty($error_message)) {
-                    echo '<div class="alert alert-danger">' . $error_message . '</div>';
-                }
+                    if (!empty($error_message)) {
+                        echo '<div class="alert alert-danger">' . $error_message . '</div>';
+                    }
 
-                // Inclui o formulário de registro
-                include "form_register.php";
-            ?>
-        </section>
-    </main>
+                    // Inclui o formulário de registro
+                    include "form_register.php";
+                ?>
+            </section>
+        </main>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2024 Estouro de Pilha. Todos os direitos reservados.</p>
-        </div>
-    </footer>
+        <footer>
+            <div class="container">
+                <p>&copy; 2024 Estouro de Pilha. Todos os direitos reservados.</p>
+            </div>
+        </footer>
+    </div>
 
 </body>
 </html>

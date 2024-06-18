@@ -4,6 +4,18 @@
     padding: 0;
     box-sizing: border-box;
 }
+body, html {
+    height: 100%;
+    margin: 0;
+}
+.container-flex {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+.content {
+    flex: 1;
+}
 
 body {
     font-family: Arial, sans-serif;

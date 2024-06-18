@@ -46,35 +46,37 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']) {
 </head>
 <body>
 
-    <header>
-        <div class="container">
-            <h1>Estouro de Pilha</h1>
-            <nav>
-                <ul>
-                    <li>Bem-vindo!</li>
-                    <li><a href="index.php">Início</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+    <div class="container-flex">
+        <header>
+            <div class="container">
+                <h1>Estouro de Pilha</h1>
+                <nav>
+                    <ul>
+                        <li>Bem-vindo!</li>
+                        <li><a href="index.php">Início</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
 
-    <main class="container">
-        <section class="form">
-            <?php
-                if (!empty($error_message)) {
-                    echo '<div class="alert alert-danger">' . $error_message . '</div>';
-                }
+        <main class="container">
+            <section class="form">
+                <?php
+                    if (!empty($error_message)) {
+                        echo '<div class="alert alert-danger">' . $error_message . '</div>';
+                    }
 
-                require_once 'form-login.php';
-            ?>
-        </section>
-    </main>
+                    require_once 'form-login.php';
+                ?>
+            </section>
+        </main>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2024 Estouro de Pilha. Todos os direitos reservados.</p>
-        </div>
-    </footer>
+        <footer>
+            <div class="container">
+                <p>&copy; 2024 Estouro de Pilha. Todos os direitos reservados.</p>
+            </div>
+        </footer>
+    </div>
     
 </body>
 </html>

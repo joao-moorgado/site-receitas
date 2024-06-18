@@ -43,48 +43,49 @@ $result_posts = $stmt_posts->get_result();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-
-<header>
-    <div class="container">
-        <h1>Estouro de Pilha</h1>
-        <nav>
-            <ul>
-                <?php if ($logged_in): ?>
-                    <li>Olá, <?php echo htmlspecialchars($usr); ?>!</li>
-                    <li><a href="index.php">Início</a></li>
-                    <li><a href="meu_perfil.php">Meu Perfil</a></li>
-                    <li><a href="logout.php">Logout</a></li>
-                <?php else: ?>
-                    <li>Bem-vindo!</li>
-                    <li><a href="index.php">Início</a></li>
-                    <li><a href="login.php">Login</a></li>
-                    <li><a href="register.php">Cadastre-se</a></li>
-                <?php endif; ?>
-            </ul>
-        </nav>
-    </div>
-</header>
-
-<main class="container">
-    <section class="feed">
-    <h2>Postagens de <?php echo htmlspecialchars($usuario->usr_name);?>:</h2>
-        <?php while ($post = $result_posts->fetch_object()):?>
-            <div class="post">
-                <p><?php echo nl2br(htmlspecialchars($post->post_body));?></p>
-                <div class="post-info">
-                    <span>Data: <?php echo htmlspecialchars($post->post_id);?></span>
-                    <span>Curtidas: <?php echo countLikes($post->post_id);?></span>
-                </div>
+    <div class="container-flex">
+        <header>
+            <div class="container">
+                <h1>Estouro de Pilha</h1>
+                <nav>
+                    <ul>
+                        <?php if ($logged_in): ?>
+                            <li>Olá, <?php echo htmlspecialchars($usr); ?>!</li>
+                            <li><a href="index.php">Início</a></li>
+                            <li><a href="meu_perfil.php">Meu Perfil</a></li>
+                            <li><a href="logout.php">Logout</a></li>
+                        <?php else: ?>
+                            <li>Bem-vindo!</li>
+                            <li><a href="index.php">Início</a></li>
+                            <li><a href="login.php">Login</a></li>
+                            <li><a href="register.php">Cadastre-se</a></li>
+                        <?php endif; ?>
+                    </ul>
+                </nav>
             </div>
-        <?php endwhile;?>
-    </section>
-</main>
+        </header>
 
-<footer>
-    <div class="container">
-        <p>&copy; 2024 Estouro de Pilha. Todos os direitos reservados.</p>
+        <main class="container">
+            <section class="feed">
+            <h2>Postagens de <?php echo htmlspecialchars($usuario->usr_name);?>:</h2>
+                <?php while ($post = $result_posts->fetch_object()):?>
+                    <div class="post">
+                        <p><?php echo nl2br(htmlspecialchars($post->post_body));?></p>
+                        <div class="post-info">
+                            <span>Data: <?php echo htmlspecialchars($post->post_id);?></span>
+                            <span>Curtidas: <?php echo countLikes($post->post_id);?></span>
+                        </div>
+                    </div>
+                <?php endwhile;?>
+            </section>
+        </main>
+
+        <footer>
+            <div class="container">
+                <p>&copy; 2024 Estouro de Pilha. Todos os direitos reservados.</p>
+            </div>
+        </footer>
     </div>
-</footer>
 
 </body>
 </html>

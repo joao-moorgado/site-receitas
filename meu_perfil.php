@@ -25,51 +25,52 @@ $result_posts = $stmt_posts->get_result();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-
-<header>
-    <div class="container">
-        <h1>Estouro de Pilha</h1>
-        <nav>
-            <ul>
-                <li>Olá, <?php echo htmlspecialchars($usr); ?>!</li>
-                <li><a href="logout.php">Logout</a></li>
-            </ul>
-        </nav>
-    </div>
-</header>
-
-<main class="container">
-    <aside class="sidebar">
-        <ul>
-            <li><a href="pesquisa_usuario.php">Usuários</a></li>
-            <li><a href="index.php">Inicio</a></li>
-        </ul>
-    </aside>
-
-
-
-    <section class="feed">
-        <h2>Minhas Postagens</h2>
-        <?php while ($post = $result_posts->fetch_object()): ?>
-            <div class="post">
-                <p><?php echo nl2br(htmlspecialchars($post->post_body)); ?></p>
-                <div class="post-info">
-                    <span>Data: <?php echo htmlspecialchars($post->post_id); ?></span>
-                    <form action="delete_post.php" method="post" style="display:inline;">
-                        <input type="hidden" name="post_id" value="<?php echo $post->post_id; ?>">
-                        <button type="submit">Apagar</button>
-                    </form>
-                </div>
+    <div class="container-flex">
+        <header>
+            <div class="container">
+                <h1>Estouro de Pilha</h1>
+                <nav>
+                    <ul>
+                        <li>Olá, <?php echo htmlspecialchars($usr); ?>!</li>
+                        <li><a href="logout.php">Logout</a></li>
+                    </ul>
+                </nav>
             </div>
-        <?php endwhile; ?>
-    </section>
-</main>
+        </header>
 
-<footer>
-    <div class="container">
-        <p>&copy; 2024 Estouro de Pilha. Todos os direitos reservados.</p>
+        <main class="container">
+            <aside class="sidebar">
+                <ul>
+                    <li><a href="pesquisa_usuario.php">Usuários</a></li>
+                    <li><a href="index.php">Inicio</a></li>
+                </ul>
+            </aside>
+
+
+
+            <section class="feed">
+                <h2>Minhas Postagens</h2>
+                <?php while ($post = $result_posts->fetch_object()): ?>
+                    <div class="post">
+                        <p><?php echo nl2br(htmlspecialchars($post->post_body)); ?></p>
+                        <div class="post-info">
+                            <span>Data: <?php echo htmlspecialchars($post->post_id); ?></span>
+                            <form action="delete_post.php" method="post" style="display:inline;">
+                                <input type="hidden" name="post_id" value="<?php echo $post->post_id; ?>">
+                                <button type="submit">Apagar</button>
+                            </form>
+                        </div>
+                    </div>
+                <?php endwhile; ?>
+            </section>
+        </main>
+
+        <footer>
+            <div class="container">
+                <p>&copy; 2024 Estouro de Pilha. Todos os direitos reservados.</p>
+            </div>
+        </footer>
     </div>
-</footer>
 
 </body>
 </html>
